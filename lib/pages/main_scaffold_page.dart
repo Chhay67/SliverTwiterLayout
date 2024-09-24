@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:silvers_scaffold/widgets/animation_bottom_bar.dart';
 import 'package:silvers_scaffold/widgets/content_pages.dart';
 
+import '../widgets/animation_floating_bar.dart';
+
 class MainScaffoldPage extends StatefulWidget {
   const MainScaffoldPage({super.key});
 
@@ -11,6 +13,7 @@ class MainScaffoldPage extends StatefulWidget {
 
 class _MainScaffoldPageState extends State<MainScaffoldPage> {
   late ScrollController scrollController;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   int _indexPage = 0;
 
   @override
@@ -28,9 +31,18 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
+      drawer: Drawer(),
       body: ContentPages(
+        scaffoldKey: scaffoldKey,
         scrollController: scrollController,
         indexPage: _indexPage,
+      ),
+      floatingActionButton: AnimationFloatingBar(
+        scrollController: scrollController,
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          
+        },),
       ),
       bottomNavigationBar: AnimationBottomBar(
         scrollController: scrollController,

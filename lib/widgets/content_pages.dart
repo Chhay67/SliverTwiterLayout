@@ -7,22 +7,23 @@ import 'package:silvers_scaffold/shared/constants.dart';
 
 class ContentPages extends StatelessWidget {
   const ContentPages(
-      {super.key, required this.scrollController, required this.indexPage});
+      {super.key, required this.scrollController, required this.indexPage,required this.scaffoldKey});
   final ScrollController scrollController;
+  final GlobalKey<ScaffoldState> scaffoldKey;
   final int indexPage;
   @override
   Widget build(BuildContext context) {
     switch (indexPage) {
       case homePageIndex:
-        return  HomePage(scrollController: scrollController,);
+        return  HomePage(scrollController: scrollController,scaffoldKey: scaffoldKey,);
       case searchPageIndex:
-        return  SearchPage(scrollController: scrollController,);
+        return  SearchPage(scrollController: scrollController,scaffoldKey: scaffoldKey,);
       case notificationPageIndex:
         return const NotificationPage();
       case profilePageIndex:
         return const ProfilePage();
       default:
-        return HomePage(scrollController: scrollController,);
+        return HomePage(scrollController: scrollController,scaffoldKey: scaffoldKey,);
     }
    
   }

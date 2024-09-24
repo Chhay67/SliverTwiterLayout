@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class AnimationFloatingBar extends StatefulWidget {
-  const AnimationFloatingBar(
-      {super.key,
-      required this.floatingActionButton,
-      required this.scrollController});
+  const AnimationFloatingBar({
+    super.key,
+    required this.floatingActionButton,
+    required this.scrollController,
+  });
   final ScrollController scrollController;
   final Widget floatingActionButton;
   @override
@@ -13,12 +14,13 @@ class AnimationFloatingBar extends StatefulWidget {
 }
 
 class _AnimationFloatingBarState extends State<AnimationFloatingBar> {
-  bool _isShowActingButton = true;
+  late ValueNotifier<bool> _isShowActingButton;
 
   @override
   void initState() {
-    widget.scrollController.addListener(_onScrollListener);
     super.initState();
+    _isShowActingButton = ValueNotifier<bool>(true); // Initial state
+    widget.scrollController.addListener(_onScrollListener);
   }
 
   void _onScrollListener() {
@@ -32,29 +34,35 @@ class _AnimationFloatingBarState extends State<AnimationFloatingBar> {
   }
 
   void _showActionBar() {
-    setState(() {
-      _isShowActingButton = true;
-    });
+    if(!_isShowActingButton.value){
+      _isShowActingButton.value = true;
+    }
   }
 
   void _hideActionBar() {
-    setState(() {
-      _isShowActingButton = false;
-    });
+    if(_isShowActingButton.value){
+      _isShowActingButton.value = false;
+    }
   }
 
   @override
   void dispose() {
     widget.scrollController.removeListener(_onScrollListener);
+    _isShowActingButton.dispose(); // Dispose the ValueNotifier
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: _isShowActingButton ? 1.0 : 0.0,
-      duration: const Duration(milliseconds: 200),
-      child: widget.floatingActionButton,
+    return ValueListenableBuilder<bool>(
+      valueListenable: _isShowActingButton,
+      builder: (context, isVisible, child) {
+        return AnimatedOpacity(
+          opacity: isVisible ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 200),
+          child: widget.floatingActionButton,
+        );
+      },
     );
   }
 }
