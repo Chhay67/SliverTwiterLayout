@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key, required this.scrollController,required this.scaffoldKey});
-  final ScrollController scrollController;
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  const SearchPage({super.key,  this.scrollController});
+  final ScrollController? scrollController;
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
@@ -60,7 +59,6 @@ class _SearchPageState extends State<SearchPage>
 
               SliverAppBar(
                 leading: IconButton( onPressed: () {
-                  widget.scaffoldKey.currentState!.openDrawer();
                 },icon: const CircleAvatar(),),
                 title: const Text('Search'),
                 centerTitle: true,

@@ -10,11 +10,9 @@ class HomePage extends ConsumerStatefulWidget {
   const HomePage({
     super.key,
     required this.scrollController,
-    required this.scaffoldKey,
   });
- final GlobalKey<ScaffoldState> scaffoldKey;
 
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   @override
   ConsumerState createState() => _HomePageState();

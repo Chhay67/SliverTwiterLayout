@@ -5,9 +5,9 @@ class AnimationFloatingBar extends StatefulWidget {
   const AnimationFloatingBar({
     super.key,
     required this.floatingActionButton,
-    required this.scrollController,
+     this.scrollController,
   });
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
   final Widget floatingActionButton;
   @override
   State<AnimationFloatingBar> createState() => _AnimationFloatingBarState();
@@ -19,15 +19,16 @@ class _AnimationFloatingBarState extends State<AnimationFloatingBar> {
   @override
   void initState() {
     super.initState();
-    _isShowActingButton = ValueNotifier<bool>(true); // Initial state
-    widget.scrollController.addListener(_onScrollListener);
+    _isShowActingButton = ValueNotifier<bool>(true); //
+
+    widget.scrollController?.addListener(_onScrollListener);
   }
 
   void _onScrollListener() {
-    if (widget.scrollController.position.userScrollDirection ==
+    if (widget.scrollController?.position.userScrollDirection ==
         ScrollDirection.forward) {
       _showActionBar();
-    } else if (widget.scrollController.position.userScrollDirection ==
+    } else if (widget.scrollController?.position.userScrollDirection ==
         ScrollDirection.reverse) {
       _hideActionBar();
     }
@@ -47,7 +48,7 @@ class _AnimationFloatingBarState extends State<AnimationFloatingBar> {
 
   @override
   void dispose() {
-    widget.scrollController.removeListener(_onScrollListener);
+    widget.scrollController?.removeListener(_onScrollListener);
     _isShowActingButton.dispose(); // Dispose the ValueNotifier
     super.dispose();
   }

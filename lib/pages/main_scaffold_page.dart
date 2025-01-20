@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silvers_scaffold/widgets/animation_bottom_bar.dart';
 import 'package:silvers_scaffold/widgets/content_pages.dart';
 
 import '../widgets/animation_floating_bar.dart';
 
 class MainScaffoldPage extends StatefulWidget {
-  const MainScaffoldPage({super.key});
-
+  const MainScaffoldPage({super.key,required this.child});
+  final Widget child;
   @override
   State<MainScaffoldPage> createState() => _MainScaffoldPageState();
 }
@@ -19,6 +20,7 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
   @override
   void initState() {
     scrollController = ScrollController();
+    debugPrint('scrollController ');
     super.initState();
   }
 
@@ -32,12 +34,7 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      drawer: Drawer(),
-      body: ContentPages(
-        scaffoldKey: scaffoldKey,
-        scrollController: scrollController,
-        indexPage: _indexPage,
-      ),
+      body: widget.child,
       floatingActionButton: AnimationFloatingBar(
         scrollController: scrollController,
         floatingActionButton: FloatingActionButton(onPressed: () {
@@ -58,9 +55,18 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
           selectedItemColor: const Color.fromARGB(255, 80, 118, 81),
           unselectedItemColor: Colors.black45,
           onTap: (index) {
+            debugPrint('BottomNavigationBar $index');
             setState(() {
               _indexPage = index;
             });
+            switch(index) {
+              case 0: context.go('/home', extra: scrollController);
+              break;
+              case 1: context.go('/search', extra: scrollController);
+              break;
+              case 2: context.go('/notification');
+              break;
+            }
           },
         ),
       ),

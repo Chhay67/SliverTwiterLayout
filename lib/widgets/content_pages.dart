@@ -15,15 +15,15 @@ class ContentPages extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (indexPage) {
       case homePageIndex:
-        return  HomePage(scrollController: scrollController,scaffoldKey: scaffoldKey,);
+        return  HomePage(scrollController: scrollController,);
       case searchPageIndex:
-        return  SearchPage(scrollController: scrollController,scaffoldKey: scaffoldKey,);
+        return  SearchPage(scrollController: scrollController,);
       case notificationPageIndex:
         return const NotificationPage();
       case profilePageIndex:
         return const ProfilePage();
       default:
-        return HomePage(scrollController: scrollController,scaffoldKey: scaffoldKey,);
+        return HomePage(scrollController: scrollController,);
     }
    
   }
